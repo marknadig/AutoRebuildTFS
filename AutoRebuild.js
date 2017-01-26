@@ -1,7 +1,7 @@
 var poller;
 var pollForBuild = function() {
-   // Approved yet?
-   if ($(".vc-pullrequest-merge-policy-status-item span:contains('approved')").length == 0) { 
+   // Approved yet? (bowtie-check == checkmark - all good)
+   if ($(".vc-pullrequest-merge-policy-status-item i.bowtie-check").siblings("span:contains('approved')").length == 0) { 
       console.log("Poller: waiting for approval");
       return; 
    }
@@ -17,10 +17,10 @@ var pollForBuild = function() {
    if ($(".vc-pullrequest-merge-policy-status-item a:contains('expired')").length) { 
       console.log("Poller: Retrying build...");
       // make sure popup is up
-      $(".vc-pullrequest-merge-policy-status-item a:contains('expired')").siblings(".action-icon").children("div").click();
+      $("div.popup-menu-trigger").click();
       setTimeout(function() {
          // click the button
-         $(".vc-pullrequest-merge-policy-status-item a:contains('expired')").siblings(".action-icon").children("ul.menu-popup").children("li").children("ul").children("li").click();
+         $("li[title='Rebuild']").click();
       }, 300);
    }
 }
